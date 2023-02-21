@@ -1,11 +1,8 @@
-import { Inter } from "@next/font/google";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { NextPageContext } from "next";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+export default function HomePage() {
   const { data: session, status } = useSession();
-
   console.log("session data", session);
   return (
     <div>
@@ -13,4 +10,13 @@ export default function Home() {
       {session?.user && <button onClick={() => signOut()}>Sign Out</button>}
     </div>
   );
+}
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  return {
+    props: {
+      session,
+    },
+  };
 }
