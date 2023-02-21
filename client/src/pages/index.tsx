@@ -1,14 +1,19 @@
+import Auth from "@/components/Auth/Auth";
+import Chat from "@/components/Chat/Chat";
+import { Box } from "@chakra-ui/react";
 import { NextPageContext } from "next";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
-  console.log("session data", session);
+  // console.log("session data", session);
   return (
-    <div>
-      {!session?.user && <button onClick={() => signIn("google")}>Sign In</button>}
-      {session?.user && <button onClick={() => signOut()}>Sign Out</button>}
-    </div>
+    <Box minHeight="100vh">
+      {/* Chat component */}
+      {session?.user.username && <Chat />}
+      {/* Auth component */}
+      {!session?.user.username && <Auth session={session} />}
+    </Box>
   );
 }
 
