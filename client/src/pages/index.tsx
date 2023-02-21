@@ -7,12 +7,14 @@ import { getSession, useSession } from "next-auth/react";
 export default function HomePage() {
   const { data: session, status } = useSession();
   // console.log("session data", session);
+
+  const reloadSession = () => {};
   return (
     <Box minHeight="100vh">
       {/* Chat component */}
-      {session?.user && <Chat />}
+      {session?.user.username && <Chat />}
       {/* Auth component */}
-      {!session?.user.username && <Auth session={session} />}
+      {!session?.user.username && <Auth session={session} reloadSession={reloadSession} />}
     </Box>
   );
 }
