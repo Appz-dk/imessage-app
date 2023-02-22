@@ -1,3 +1,6 @@
+import UserOperations from "@/graphql/operations/user";
+import { CreateUsernameData, CreateUsernameVariables } from "@/utils/types";
+import { useMutation } from "@apollo/client";
 import { Center, Stack } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
@@ -12,11 +15,15 @@ type AuthProps = {
 
 const Auth: React.FC<AuthProps> = ({ session }) => {
   const [username, setUsername] = useState("");
+  const [createUsername, { loading, error, data }] = useMutation<
+    CreateUsernameData,
+    CreateUsernameVariables
+  >(UserOperations.Mutations.createUsername);
 
   const onSubmit = async () => {
     try {
-      // Communicate with backend
       // createUsername mutation
+      await createUsername({ variables: { username } });
     } catch (error) {
       console.log("onSubmit error", error);
       // TODO: Show UI error component
