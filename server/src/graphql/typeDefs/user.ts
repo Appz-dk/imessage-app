@@ -14,7 +14,7 @@ const typeDefs = gql`
 
   # Mutation = Writing Data
   type Mutation {
-    createUsername(username: string): CreateUsernameResponse
+    createUsername(username: String): CreateUsernameResponse
   }
 
   type CreateUsernameResponse {
