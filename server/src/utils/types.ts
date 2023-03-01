@@ -6,3 +6,11 @@ export interface GraphQLContext {
   prisma: PrismaClient
   // pubsub
 }
+
+/**
+ * Users types
+ */
+export interface CreateUsernameResponse {
+  success?: boolean;
+  error?: string;
+}

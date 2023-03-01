@@ -13,19 +13,30 @@ type AuthProps = {
   reloadSession: () => void;
 };
 
-const Auth: React.FC<AuthProps> = ({ session }) => {
+const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
   const [username, setUsername] = useState("");
-  const [createUsername, { loading, error, data }] = useMutation<
+  const [createUsername, { loading, error }] = useMutation<
     CreateUsernameData,
     CreateUsernameVariables
   >(UserOperations.Mutations.createUsername);
 
-  console.log("Session", session);
-
   const onSubmit = async () => {
     try {
       // createUsername mutation
-      await createUsername({ variables: { username } });
+      const { data } = await createUsername({ variables: { username } });
+
+      if (!data?.createUsername) {
+        throw new Error();
+      }
+
+      if (data.createUsername.error) {
+        throw new Error(data.createUsername.error);
+      }
+
+      if (data?.createUsername.success) {
+        // Reload session to hold the newly created username
+        reloadSession();
+      }
     } catch (error) {
       console.log("onSubmit error", error);
       // TODO: Show UI error component

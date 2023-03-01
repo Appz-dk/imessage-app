@@ -6,9 +6,13 @@ import { getSession, useSession } from "next-auth/react";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
-  // console.log("session data", session);
+  console.log("session data", session);
 
-  const reloadSession = () => {};
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
   return (
     <Box minHeight="100vh">
       {/* Chat component */}
