@@ -5,6 +5,7 @@ import { Center, Stack } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import CreateUsername from "./CreateUsername";
 import SignIn from "./SignIn";
 
@@ -37,9 +38,11 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
         // Reload session to hold the newly created username
         reloadSession();
       }
-    } catch (error) {
+
+      toast.success("Successfully created username! 🚀");
+    } catch (error: any) {
       console.log("onSubmit error", error);
-      // TODO: Show UI error component
+      toast.error(error instanceof Error ? error.message : "An error occurred. Please try again");
     }
   };
 
