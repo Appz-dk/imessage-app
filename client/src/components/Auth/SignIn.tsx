@@ -1,4 +1,4 @@
-import { Button, Image, Stack, Text } from "@chakra-ui/react";
+import { Button, Image, Text } from "@chakra-ui/react";
 
 type SignInProps = {
   signIn: (provider: string) => void;

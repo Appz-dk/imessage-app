@@ -20,6 +20,8 @@ const Auth: React.FC<AuthProps> = ({ session }) => {
     CreateUsernameVariables
   >(UserOperations.Mutations.createUsername);
 
+  console.log("Session", session);
+
   const onSubmit = async () => {
     try {
       // createUsername mutation
