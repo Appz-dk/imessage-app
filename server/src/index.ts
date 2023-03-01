@@ -8,7 +8,10 @@ import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 import * as dotenv from "dotenv"
 import { GraphQLContext } from "./utils/types";
+import { PrismaClient } from '@prisma/client'
 dotenv.config()
+
+
 
 async function startApolloServer() {
   const app = express();
@@ -23,6 +26,9 @@ async function startApolloServer() {
   // Setting up graphql schema
   const schema = makeExecutableSchema({ typeDefs, resolvers })
 
+  // Context paramaters
+  const prisma = new PrismaClient()
+
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
@@ -30,7 +36,7 @@ async function startApolloServer() {
     context: async ({ req, res }): Promise<GraphQLContext> => {
       const session = await getSession({ req })
       // GraphQL context
-      return { session }
+      return { session, prisma }
     },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer }), ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   });
