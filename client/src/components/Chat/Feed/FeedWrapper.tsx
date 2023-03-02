@@ -5,7 +5,7 @@ type FeedWrapperProps = {
 };
 
 const FeedWrapper: React.FC<FeedWrapperProps> = ({ session }) => {
-  return <div>FeedWrapper</div>;
+  return <div>Feed Wrapper</div>;
 };
 
 export default FeedWrapper;
