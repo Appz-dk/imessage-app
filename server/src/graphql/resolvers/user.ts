@@ -2,7 +2,30 @@ import { CreateUsernameResponse, GraphQLContext } from "../../utils/types"
 
 const resolvers = {
   Query: {
-    searchUsers: () => { }
+    searchUsers: async (_: any, args: { username: string }, context: GraphQLContext) => {
+      const { username } = args
+      const { prisma, session } = context
+
+      console.log("HERE WE ARE")
+
+      // if (!session?.user) {
+      //   return {
+      //     error: "Unauthorized"
+      //   }
+      // }
+
+      // try {
+      //   const user = await prisma.user.findMany({
+      //     where: {
+      //       username
+      //     }
+      //   })
+
+      //   // return users ???
+      // } catch (error) {
+
+      // }
+    }
   },
   Mutation: {
     createUsername: async (_: any, args: { username: string }, context: GraphQLContext): Promise<CreateUsernameResponse> => {

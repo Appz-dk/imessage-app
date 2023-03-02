@@ -1,6 +1,6 @@
 import { Box, Text, useDisclosure } from "@chakra-ui/react";
 import { Session } from "next-auth";
-import ConversationModal from "../../Modal/ConversationModal";
+import ConversationModal from "./Modal/ConversationModal";
 
 type ConversationsListProps = {
   session: Session;

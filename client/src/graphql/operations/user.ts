@@ -1,7 +1,17 @@
 import { gql } from "@apollo/client";
 
 export default {
-  Queries: {},
+  Queries: {
+    searchUsers: gql`
+      query SearchUsers($username: String!) {
+        searchUsers(username: $username) {
+          # Specific fields we want returned (do not have to fetch entire entity)
+          id
+          username
+        }
+      }
+    `
+  },
   Mutations: {
     createUsername: gql`
       mutation CreateUsername($username: String!) {
