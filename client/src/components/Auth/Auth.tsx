@@ -53,7 +53,12 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
         {!session?.user && <SignIn signIn={signIn} />}
         {/* Create username */}
         {session?.user && (
-          <CreateUsername username={username} setUsername={setUsername} onSubmit={onSubmit} />
+          <CreateUsername
+            username={username}
+            setUsername={setUsername}
+            onSubmit={onSubmit}
+            loading={loading}
+          />
         )}
       </Stack>
     </Center>
