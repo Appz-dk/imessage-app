@@ -11,15 +11,15 @@ const typeDefs = gql`
   type Query {
     searchUsers(username: String): [SearchedUser]
   }
- 
-  # Mutation = Writing Data
-  type Mutation {
-    createUsername(username: String): CreateUsernameResponse
-  }
 
   type CreateUsernameResponse {
     success: Boolean
     error: String
+  }
+ 
+  # Mutation = Writing Data
+  type Mutation {
+    createUsername(username: String): CreateUsernameResponse
   }
 `
 

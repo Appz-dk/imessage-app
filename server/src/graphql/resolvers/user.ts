@@ -1,6 +1,5 @@
 import { User } from "@prisma/client"
 import { ApolloError } from "apollo-server-core"
-import { GraphQLError } from "graphql"
 import { CreateUsernameResponse, GraphQLContext } from "../../utils/types"
 
 const resolvers = {
