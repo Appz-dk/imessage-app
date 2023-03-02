@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <Box minHeight="100vh">
       {/* Chat component */}
-      {session?.user.username && <Chat />}
+      {session?.user.username && <Chat session={session} />}
       {/* Auth component */}
       {!session?.user.username && <Auth session={session} reloadSession={reloadSession} />}
     </Box>
