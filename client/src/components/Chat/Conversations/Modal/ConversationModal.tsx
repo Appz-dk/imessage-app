@@ -1,4 +1,4 @@
-import { SearchUsersData, SearchUsersVariables } from "@/utils/types";
+import { SearchedUser, SearchUsersData, SearchUsersVariables } from "@/utils/types";
 import { useLazyQuery } from "@apollo/client";
 import {
   Modal,
@@ -22,6 +22,7 @@ type ModalProps = {
 
 const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [username, setUsername] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState<SearchedUser[]>([]);
   const [searchUsers, { data, loading, error }] = useLazyQuery<
     SearchUsersData,
     SearchUsersVariables
@@ -34,6 +35,14 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     searchUsers({ variables: { username } });
     // Reset username
     setUsername("");
+  };
+
+  const onSelectUser = (user: SearchedUser) => {
+    setSelectedUsers((prev) => [...prev, user]);
+  };
+
+  const onRemoveUser = (userId: string) => {
+    setSelectedUsers((prev) => prev.filter((user) => user.id !== userId));
   };
 
   console.log("Search data", data);
@@ -58,7 +67,13 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 </Button>
               </Stack>
             </form>
-            {data?.searchUsers && <UserSearchList users={data.searchUsers} />}
+            {data?.searchUsers && (
+              <UserSearchList
+                users={data.searchUsers}
+                selectedUsers={selectedUsers}
+                onSelectUser={onSelectUser}
+              />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
