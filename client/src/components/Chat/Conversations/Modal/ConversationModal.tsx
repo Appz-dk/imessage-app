@@ -12,7 +12,9 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import UserOperations from "../../../../graphql/operations/user";
+import Participants from "./Participants";
 import UserSearchList from "./UserSearchList";
 
 type ModalProps = {
@@ -27,6 +29,17 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     SearchUsersData,
     SearchUsersVariables
   >(UserOperations.Queries.searchUsers);
+
+  const onCreateConversation = async () => {
+    try {
+      // Start new convo with selectedUsers
+    } catch (error: any) {
+      console.log("onCreateConversation error", error);
+      toast.error(error.message);
+    }
+    // reset selectedUsers array
+    setSelectedUsers([]);
+  };
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,8 +58,6 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setSelectedUsers((prev) => prev.filter((user) => user.id !== userId));
   };
 
-  console.log("Search data", data);
-
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -54,7 +65,7 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <ModalContent bg="#2d2d2d" pb="4">
           <ModalHeader>Create a Conversation</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody display="flex" flexDir="column" gap="6">
             <form onSubmit={onSearch}>
               <Stack spacing={4}>
                 <Input
@@ -73,6 +84,21 @@ const ConversationModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 selectedUsers={selectedUsers}
                 onSelectUser={onSelectUser}
               />
+            )}
+            {selectedUsers.length > 0 && (
+              <>
+                <Participants selectedUsers={selectedUsers} onRemoveUser={onRemoveUser} />
+                <Button
+                  bgColor="brand.100"
+                  width="full"
+                  _hover={{
+                    bgColor: "blue.700",
+                  }}
+                  onClick={() => {}}
+                >
+                  Create Conversation
+                </Button>
+              </>
             )}
           </ModalBody>
         </ModalContent>
